@@ -3,7 +3,7 @@ from forms.search import SearchForm
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'very_secret_key'
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 # app.register_blueprint(jobs_api.blueprint)
 
 
