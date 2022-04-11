@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form class="search">
+       {{ form.hidden_tag() }}
+       <p><input type="text" name="search">
+          <input type="submit" value="Поиск"></p>
+    </form>
+    <div class="categories">
+        <a href="/clothes" class="btn">Одежда</a>
+        <a href="/shoes" class="btn">Обувь</a>
+        <a href="/house" class="btn">Дом</a>
+        <a href="/accessories" class="btn">Аксессуары</a>
+    </div>
+    <div class="ad">
+        <a href="/chemistry" class="btn-img"><img src="../static/img/vodka.png">Напою ваших обидчиков царской водкой :)
+            <br>Химия в деле - скилл на пределе...</a>
+        <a href="/cat" class="btn-img"><img src="../static/img/vodka.png">Отдам кота в добрые руки!!!
+            <br>Кастрирован, привит, не кусается...</a>
+        <a href="/nothing" class="btn-img"><img src="../static/img/pain.png">Здесь могла быть ваша реклама, но вы нам не заплатили...</a>
+        <a href="/nothing" class="btn-img"><img src="../static/img/pain.png">Здесь могла быть ваша реклама, но вы нам не заплатили...</a>
+    </div>
+{% endblock %}

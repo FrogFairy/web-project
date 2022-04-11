@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="side">
+        <div class="main">
+            <img class="penguin" src="../static/img/penguin.png" alt="пингвин" width="60" height="80">
+            <div class="title">
+                <h1>Penguins Corp</h1>
+            </div>
+            <div class="button">
+                <a href="/account"><img src="../static/img/user.png" alt="пользователь" width="100" height="80"></a>
+                <a href="/basket"><img src="../static/img/basket.png" alt="корзина" width="100" height="80"></a>
+            </div>
+            {% block content %}
+            {% endblock %}
+            <nav class="about">
+                <ul>
+                    <li><h3>О нас:</h3></li>
+                    <li><a href="/contacts">Контакты</a></li>
+                    <li><a href="/developers">Разработчики</a></li>
+                    <li><a href="/help">Помощь</a></li>
+                    <li><a href="/question">Задать вопрос</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>
