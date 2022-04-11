@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from forms.search import SearchForm
 
 
@@ -11,12 +11,17 @@ def main():
     app.run(port=8080, host='127.0.0.1')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
     form = SearchForm()
     if form.validate_on_submit():
-        return render_template('result.html', title='Результаты поиска', form=form)
+        return redirect('/result')
     return render_template('home.html', title='Главная страница', form=form)
+
+
+@app.route('/result')
+def result():
+    return render_template('result.html', title='Результаты поиска')
 
 
 if __name__ == '__main__':

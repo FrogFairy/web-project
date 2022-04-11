@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form class="search">
+    <form class="search" action="" method="post" novalidate>
+        <div>
+            {{ form.csrf_token }}
+        </div>
        {{ form.hidden_tag() }}
-       <p><input type="text" name="search">
-          <input type="submit" value="Поиск"></p>
+       <p>{{ form.request() }}
+          {{ form.submit(type="submit") }}</p>
     </form>
     <div class="categories">
         <a href="/clothes" class="btn">Одежда</a>
