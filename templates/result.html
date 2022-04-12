@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends "base.html" %}
 
 {% block content %}
@@ -8,7 +7,7 @@
         </div>
        {{ form.hidden_tag() }}
        <p>{{ form.request() }}
-          {{ form.submit(type="submit") }}
+          {{ form.submit(type="submit", class="submit") }}
        </p>
        <details class="filter">
            <summary>Фильтры</summary>
@@ -43,11 +42,13 @@
                    <label for="radio{{ i }}" >{{ i }}</label>
                {% endfor %}
            </p>
+           <input type="submit" value="Применить" class="filter-btn"/>
        </details>
     </form>
     {% if not products %}
         <p class="message">Ничего не нашлось!</p>
     {% else %}
+        <p class="message">Поиск по запросу '{{ form.request.data }}'</p>
         <div class="container">
             {% set count = 0 %}
             <div class="wrap">
@@ -57,21 +58,15 @@
                         <div class="wrap">
                         {% set count = 0 %}
                     {% endif %}
-                    <div class="block"><img src="{{ i.image }}" width="100%" height="60%">
+                    <a class="block" href="/product/{{ i.id }}"><img src="{{ i.image }}">
                         <p>Название: {{i.title.capitalize()}}
                         <br>Категория: {{categories.filter(Category.id == i.category).first().name}}
                         <br>Цвет: {{colors.filter(Colors.id == i.color).first().name}}
                         <br>Бренд: {{shops.filter(Shops.id == i.shop).first().title}}
-                        <br>Рейтинг: {{i.rating}}</p></div>
+                        <br>Рейтинг: {{i.rating}}</p></a>
                     {% set count = count + 1 %}
                 {% endfor %}
             </div>
         </div>
     {% endif %}
-=======
-{% extends "base.html" %}
-
-{% block content %}
-    <p>Может что-то бы и нашлось, будь у нас база данных...</p>
->>>>>>> 4ebbabcdd4f3a43add42109c89773780f5bbf83a
 {% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form class="search" action="" method="post" novalidate>
+        <div>
+            {{ form.csrf_token }}
+        </div>
+        {{ form.hidden_tag() }}
+        <p>{{ form.request() }}
+          {{ form.submit(type="submit", class="submit") }}
+        </p>
+        <details class="filter">
+            <summary>Фильтры</summary>
+            <p>Цвета:
+                {% for color in colors %}
+                    {% if color.name in params['color'] %}
+                        <input type="checkbox" class="checkbox" id="checkbox{{ color }}" name="color" value="{{ color.name }}" checked/>
+                    {% else %}
+                        <input type="checkbox" class="checkbox" id="checkbox{{ color }}" name="color" value="{{ color.name }}"/>
+                    {% endif %}
+                    <label for="checkbox{{ color }}">{{ color.name }}</label>
+                {% endfor %}
+            </p>
+            <p>Сортировка:
+                {% set a = ["По умолчанию", "По популярности", "По рейтингу", "По увеличению цены", "По уменьшению цены"] %}
+                {% for i in a %}
+                    {% if i == params['sort'] %}
+                        <input type="radio" class="radio" id="radio{{ i }}" name="sort" value="{{ i }}" checked/>
+                    {% else %}
+                        <input type="radio" class="radio" id="radio{{ i }}" name="sort" value="{{ i }}"/>
+                    {% endif %}
+                    <label for="radio{{ i }}" >{{ i }}</label>
+                {% endfor %}
+            </p>
+            <input type="submit" value="Применить" class="filter-btn"/>
+        </details>
+    </form>
+    <p class="message" align="center">Товары категории {{ category }}</p>
+    <div class="container">
+        {% set count = 0 %}
+        <div class="wrap">
+            {% for i in products %}
+                {% if count == 4 %}
+                    </div>
+                    <div class="wrap">
+                    {% set count = 0 %}
+                {% endif %}
+                <a class="block" href="/product/{{ i.id }}"><img src="{{ i.image }}">
+                    <p>Название: {{i.title.capitalize()}}
+                    <br>Категория: {{category}}
+                    <br>Цвет: {{colors.filter(Colors.id == i.color).first().name}}
+                    <br>Бренд: {{shops.filter(Shops.id == i.shop).first().title}}
+                    <br>Рейтинг: {{i.rating}}</p></a>
+                {% set count = count + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

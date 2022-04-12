@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, redirect, request
 from forms.search import SearchForm
 from data import db_session
@@ -7,10 +6,12 @@ from data.shops import Shops
 from data.category import Category
 from data.colors import Colors
 from data.requests import Requests
+from data.category_api import blueprint
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.register_blueprint(blueprint)
 db_session.global_init(f"db/penguins.db")
 db_sess = db_session.create_session()
 
@@ -61,7 +62,6 @@ def result(req):
         elif req.sort == "По уменьшению цены":
             products = products.order_by(Products.price)[::-1]
     params = {'color': req.color.split(', '), 'category': req.category.split(', '), 'sort': req.sort}
-    print(params)
     return render_template('result.html', title='Результаты поиска', form=form,
                            products=products, request=req, colors=colors,
                            categories=categories, shops=shops, Category=Category, Colors=Colors, Shops=Shops,
@@ -69,33 +69,4 @@ def result(req):
 
 
 if __name__ == '__main__':
-=======
-from flask import Flask, render_template, redirect
-from forms.search import SearchForm
-
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-# app.register_blueprint(jobs_api.blueprint)
-
-
-def main():
-    app.run(port=8080, host='127.0.0.1')
-
-
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    form = SearchForm()
-    if form.validate_on_submit():
-        return redirect('/result')
-    return render_template('home.html', title='Главная страница', form=form)
-
-
-@app.route('/result')
-def result():
-    return render_template('result.html', title='Результаты поиска')
-
-
-if __name__ == '__main__':
->>>>>>> 4ebbabcdd4f3a43add42109c89773780f5bbf83a
     main()
