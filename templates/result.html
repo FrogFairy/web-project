@@ -1,5 +1,77 @@
+<<<<<<< HEAD
+{% extends "base.html" %}
+
+{% block content %}
+    <form class="search" action="" method="post" novalidate>
+        <div>
+            {{ form.csrf_token }}
+        </div>
+       {{ form.hidden_tag() }}
+       <p>{{ form.request() }}
+          {{ form.submit(type="submit") }}
+       </p>
+       <details class="filter">
+           <summary>Фильтры</summary>
+           <p>Цвета:
+               {% for color in colors %}
+                   {% if color.name in params['color'] %}
+                       <input type="checkbox" class="checkbox" id="checkbox{{ color }}" name="color" value="{{ color.name }}" checked/>
+                   {% else %}
+                       <input type="checkbox" class="checkbox" id="checkbox{{ color }}" name="color" value="{{ color.name }}"/>
+                   {% endif %}
+                   <label for="checkbox{{ color }}">{{ color.name }}</label>
+               {% endfor %}
+           </p>
+           <p>Категории:
+               {% for c in categories %}
+                   {% if c.name in params['category'] %}
+                       <input type="checkbox" class="checkbox" id="checkbox{{ c }}" name="category" value="{{ c.name }}" checked/>
+                   {% else %}
+                       <input type="checkbox" class="checkbox" id="checkbox{{ c }}" name="category" value="{{ c.name }}"/>
+                   {% endif %}
+                   <label for="checkbox{{ c }}">{{ c.name }}</label>
+               {% endfor %}
+           </p>
+           <p>Сортировка:
+               {% set a = ["По умолчанию", "По популярности", "По рейтингу", "По увеличению цены", "По уменьшению цены"] %}
+               {% for i in a %}
+                   {% if i == params['sort'] %}
+                       <input type="radio" class="radio" id="radio{{ i }}" name="sort" value="{{ i }}" checked/>
+                   {% else %}
+                       <input type="radio" class="radio" id="radio{{ i }}" name="sort" value="{{ i }}"/>
+                   {% endif %}
+                   <label for="radio{{ i }}" >{{ i }}</label>
+               {% endfor %}
+           </p>
+       </details>
+    </form>
+    {% if not products %}
+        <p class="message">Ничего не нашлось!</p>
+    {% else %}
+        <div class="container">
+            {% set count = 0 %}
+            <div class="wrap">
+                {% for i in products %}
+                    {% if count == 4 %}
+                        </div>
+                        <div class="wrap">
+                        {% set count = 0 %}
+                    {% endif %}
+                    <div class="block"><img src="{{ i.image }}" width="100%" height="60%">
+                        <p>Название: {{i.title.capitalize()}}
+                        <br>Категория: {{categories.filter(Category.id == i.category).first().name}}
+                        <br>Цвет: {{colors.filter(Colors.id == i.color).first().name}}
+                        <br>Бренд: {{shops.filter(Shops.id == i.shop).first().title}}
+                        <br>Рейтинг: {{i.rating}}</p></div>
+                    {% set count = count + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+=======
 {% extends "base.html" %}
 
 {% block content %}
     <p>Может что-то бы и нашлось, будь у нас база данных...</p>
+>>>>>>> 4ebbabcdd4f3a43add42109c89773780f5bbf83a
 {% endblock %}
