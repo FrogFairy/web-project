@@ -45,8 +45,8 @@
                     <div class="wrap">
                     {% set count = 0 %}
                 {% endif %}
-                <a class="block" href="/product/{{ i.id }}"><img src="{{ i.image }}">
-                    <p>Название: {{i.title.capitalize()}}
+                <a class="block" href="/product/{{ i.id }}"><img src="{{ i.image.split(', ')[0] }}">
+                    <p><b>{{i.title.capitalize()}}</b>
                     <br>Категория: {{category}}
                     <br>Цвет: {{colors.filter(Colors.id == i.color).first().name}}
                     <br>Бренд: {{shops.filter(Shops.id == i.shop).first().title}}

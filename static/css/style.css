@@ -13,16 +13,46 @@
 .title h1, .title h1:visited, .title h1:hover, .title h1:link {
     color: black;
 }
-.button {
-    width: 260px;
+.user, .basket {
+    width: 150px;
     background: #81d5fa;
-    padding: 5px 10px 10px 20px;
+    padding: 5px 0px 5px 20px;
     position: fixed;
-    border-radius: 0px 0px 0px 20px;
-    right: 150px;
     box-shadow: -10px 10px 20px;
-    float: left;
+}
+.user {
+    right: 320px;
+    z-index: 1010;
+}
+.basket {
+    right: 150px;
     z-index: 1005;
+}
+.user a, .user details {
+    float: left;
+}
+.user details {
+    width: 100%;
+}
+.user details a {
+    background: #81d5fa;
+    width: 160%;
+    position: absolute;
+    display: flex;
+    text-decoration: none;
+    color: black;
+    font-size: 28px;
+    right: 0;
+    padding: 5px 0px 5px 20px;
+    box-shadow: -10px 10px 20px;
+}
+.user details .my {
+    top: 90px;
+    border-radius: 20px 0px 0px 0px;
+}
+.user details .logout {
+    top: 140px;
+    border-radius: 0px 0px 20px 20px;
 }
 .penguin {
     position: absolute;
@@ -44,6 +74,71 @@
     border-radius: 20px;
     background: #81d5fa;
     width: 6%
+}
+.product {
+    background: #ffffff;
+    position: absolute;
+    top: 120px;
+    left: 20px;
+    width: 97%;
+    border-radius: 20px;
+    padding: 20px;
+}
+.product p{
+    font-size: 30px;
+}
+.product b {
+    font-size: 50px;
+}
+.product .carousel-inner img {
+    height: 700px;
+    border-radius: 20px;
+}
+.product .carousel.slide {
+    float: left;
+}
+.product-btn, .product-btn:visited, .product-btn:hover, .product-btn:link {
+    border-radius: 20px;
+    background: #81d5fa;
+    font-size: 40px;
+}
+.basket-btn, .basket-btn:visited, .basket-btn:hover, .basket-btn:link {
+    background: #FA8072;
+    font-size: 20px;
+}
+.comment {
+    top: 880px;
+    background: #ffffff;
+}
+.comment-text {
+    top: 970px;
+}
+.comment, .comment-text {
+    position: absolute;
+    left: 20px;
+    width: 97%;
+    border-radius: 20px;
+}
+.wrap-comment {
+    margin: 0 -15px;
+}
+.block-comment {
+    width: 23%;
+    float: left;
+    margin: 0 15px;
+    background: #ffffff;
+    border-radius: 20px;
+    text-decoration: none;
+}
+.comment-text p{
+    font-size: 30px;
+    padding: 0 20px;
+}
+.comment-text .carousel-inner img {
+    height: 300px;
+    width: 300px;
+    border-radius: 20px;
+    float: left;
 }
 .filter-btn, .filter-btn:visited, .filter-btn:hover, .filter-btn:link {
     border-radius: 20px;
@@ -198,37 +293,47 @@
 .radio:focus + label:before {
 	box-shadow: 0 0 0 3px rgba(255,255,0,.7);
 }
-.container {
+.container, .container-basket {
     position: absolute;
-    top: 320px;
     left: 20px;
     min-width: 97%;
     border-radius: 20px;
 }
+.container {
+    top: 320px;
+}
+.container-basket {
+    top: 200px;
+}
 .wrap {
     margin: 0 -15px;
 }
-.block {
-    height: 500px;
+.block, .block-basket {
     width: 23%;
     float: left;
     margin: 15px;
+    height: 500px;
     background: #ffffff;
     border-radius: 20px;
     text-decoration: none;
     color: black;
 }
-.block p{
+.block p, .block-basket p{
     padding: 0 10px;
     color: black;
     font-size: 20px;
 }
-.block img {
+.block img, .block-basket img {
     border-radius: 20px 20px 0 0;
     width: 100%;
+}
+.block img {
     height: 70%;
 }
-.message {
+.block-basket img {
+    height: 60%;
+}
+.message, .message-basket {
     position: absolute;
     padding: 10px;
     border-radius: 20px;
@@ -236,9 +341,14 @@
     font-size: 24px;
     left: 20px;
     width: 97%;
-    top: 260px;
     box-shadow: -1px 1px 10px;
     align: center;
+}
+.message {
+    top: 260px;
+}
+.message-basket {
+    top: 120px;
 }
 .about {
     width: 84%;
@@ -267,6 +377,19 @@
     overflow-y: auto;
     background: #fffde7;
     margin: 0px 150px;
+}
+.main::-webkit-scrollbar {
+    width: 10px;
+}
+.main::-webkit-scrollbar-track {
+    -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+    background-color: #f9f9fd;
+}
+.main::-webkit-scrollbar-thumb {
+    background-color: #356184;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%,
+                    color-stop(.5, rgba(255, 255, 255, .25)),
+                    color-stop(.5, transparent), to(transparent));
 }
 body, html {
     height: 100%;

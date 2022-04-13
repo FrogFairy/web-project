@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p class="message-basket" align="center">Корзина</p>
+    <div class="container-basket">
+        {% set count = 0 %}
+        <div class="wrap">
+            {% for i in products %}
+                {% if count == 4 %}
+                    </div>
+                    <div class="wrap">
+                    {% set count = 0 %}
+                {% endif %}
+                <a class="block-basket" href="/product/{{ i.id }}">
+                    <form action="" method="post">
+                        <input type="hidden" name="hidden" value="{{ i.id }}">
+                        <input type="submit" value="Удалить" class="basket-btn"/>
+                    </form>
+                    <img src="{{ i.image.split(', ')[0] }}">
+                    <p><b>{{i.title.capitalize()}}</b>
+                    <br>Категория: {{category.filter(Category.id == i.category).first().name}}
+                    <br>Цвет: {{colors.filter(Colors.id == i.color).first().name}}
+                    <br>Бренд: {{shops.filter(Shops.id == i.shop).first().title}}
+                    <br>Рейтинг: {{i.rating}}</p></a>
+                {% set count = count + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

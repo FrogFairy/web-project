@@ -17,7 +17,7 @@ class Products(SqlAlchemyBase, UserMixin):
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     rating = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     count = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
-    image = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
+    image = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     shops = orm.relation('Shops', back_populates='products')
     categories = orm.relation("Category",
                               secondary="products_to_category",
@@ -25,3 +25,4 @@ class Products(SqlAlchemyBase, UserMixin):
     colors = orm.relation("Colors",
                           secondary="products_to_colors",
                           backref="products")
+    comments = orm.relation('Comments', back_populates='products')

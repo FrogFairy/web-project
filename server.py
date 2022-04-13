@@ -6,7 +6,7 @@ from data.shops import Shops
 from data.category import Category
 from data.colors import Colors
 from data.requests import Requests
-from data.category_api import blueprint
+from data.product_api import blueprint
 
 
 app = Flask(__name__)

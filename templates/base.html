@@ -18,8 +18,14 @@
             <a class="title" href="/">
                 <h1>Penguins Corp</h1>
             </a>
-            <div class="button">
-                <a><img src="../static/img/user.png" alt="пользователь" width="100" height="80"></a>
+            <div class="user">
+                <details>
+                    <summary><img src="../static/img/user.png" alt="пользователь" width="100" height="80"></summary>
+                    <a class='my' href="/my">Личный кабинет</a>
+                    <a class='logout' href="/logout">Выход</a>
+                </details>
+            </div>
+            <div class="basket">
                 <a href="/basket"><img src="../static/img/basket.png" alt="корзина" width="100" height="80"></a>
             </div>
             {% block content %}
