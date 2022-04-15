@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="my_form" enctype="multipart/form-data">
+        <input type="hidden" name="hidden" value="update">
+        <h1>Личный кабинет</h1>
+        <p>
+            <label for="name">Имя</label>
+            <input type="text" class='form-control' name='name' id="name" value="{{user.name}}" required>
+        </p>
+        <p>
+            <label for="surname">Фамилия</label>
+            <input type="text" class='form-control' name='surname' id="surname" value="{{user.surname}}" required>
+        </p>
+        <p>
+            <label for="birthday">Дата рождения</label>
+            <input type="date" class='form-control' name='birthday' id="birthday" value="{{ user.birthday }}" required>
+        </p>
+        <p>
+            <label for="email">Почта</label>
+            <input type="email" class='form-control' name='email' id="email" value="{{user.email}}" required>
+        </p>
+        <p>
+            <label for="password">Пароль</label>
+            <input type="password" class='form-control' name='password' id="password" required>
+        </p>
+        <p><input type="submit" class="btn btn-primary" value="Сохранить"></p>
+        <p class="msg">{{message}}</p>
+        {% if age.days / 365 >= 18 and user.confirmed == 1 %}
+            <a href="/add_shop">
+                Создать магазин
+            </a>
+        {% endif %}
+    </form>
+    {% if user.shops %}
+        <div class="container-shops">
+            {% set count = 0 %}
+            <div class="wrap">
+                {% for i in user.shops %}
+                    {% if count == 4 %}
+                        </div>
+                        <div class="wrap">
+                        {% set count = 0 %}
+                    {% endif %}
+                    <div class="block-shops">
+                        <form action="" method="post">
+                            <input type="hidden" name="hidden" value="{{ i.id }}">
+                            <input type="submit" value="Удалить" class="basket-btn"/>
+                        </form>
+                        <a href="/shop/{{ i.id }}">
+                            <b>{{i.title.capitalize()}}</b>
+                            <br>{{ i.email }}
+                        </a>
+                    </div>
+                    {% set count = count + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

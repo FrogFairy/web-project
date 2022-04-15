@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="register" enctype="multipart/form-data">
+        <h1>Комментарий к товару '{{ product.title.capitalize() }}'</h1>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.rating.label }}<br>
+            {{ form.rating(class='form-control') }}<br>
+            {% for error in form.rating.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.text.label }}<br>
+            {{ form.text(class='form-control') }}<br>
+            {% for error in form.text.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            <input type="file" name="image" value="Выберите фотографии">
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p class="msg">{{message}}</p>
+    </form>
+{% endblock %}

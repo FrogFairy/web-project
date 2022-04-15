@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="register">
+        <h1>Регистрация</h1>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(type="email", class='form-control') }}<br>
+            {% for error in form.email.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(type="password", class='form-control') }}<br>
+            {% for error in form.password.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password_again.label }}<br>
+            {{ form.password_again(type="password", class='form-control') }}<br>
+            {% for error in form.password_again.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(class='form-control') }}<br>
+            {% for error in form.name.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.surname.label }}<br>
+            {{ form.surname(class='form-control') }}<br>
+            {% for error in form.surname.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.birthday.label }}<br>
+            {{ form.birthday(class='form-control') }}<br>
+            {% for error in form.birthday.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p class="msg">{{message}}</p>
+    </form>
+{% endblock %}

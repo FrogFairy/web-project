@@ -31,13 +31,18 @@
         <br>Цвет: {{colors.filter(Colors.id == product.color).first().name}}
         <br>Бренд: {{shops.filter(Shops.id == product.shop).first().title}}
         <br>Рейтинг: {{product.rating}}
-        <br>Количество просмотров: {{product.count}}</i></p>
+        <br>Количество покупок: {{product.count}}</i></p>
         <form action="" method="post">
+            <input type="hidden" name="hidden" value="{{ product.id }}">
             <input type="submit" value="В корзину" class="product-btn"/>
         </form>
     </div>
     <div class="comment"><h1 align="center">Комментарии</h1></div>
-    {% set a = 0 %}
+    {% if current_user.is_authenticated and not flag%}
+        <a href="/comment/{{ product.id }}" class="comment-btn">
+            Написать комментарий
+        </a>
+    {% endif %}
     <div class="comment-text">
         {% set a = 0 %}
         <div class="wrap-comment">
@@ -50,29 +55,11 @@
                 <div class="block-comment">
                     {% set author = users.filter(Users.id == i.author).first() %}
                     <p align="right"><br>{{ author.name }} {{ author.surname }}</p>
-                    <div class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            {% for j in i.image.split(', ') %}
-                                {% if loop.first %}
-                                    <div class="carousel-item active">
-                                        <img class="d-block w-100" src="{{ j }}">
-                                    </div>
-                                {% else %}
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="{{ j }}">
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                    {% if i.image %}
+                        <div>
+                            <img src="{{i.image}}">
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                    </div>
+                    {% endif %}
                     <p><b>Оценка: {{ i.rating }}</b>
                         <br><i>{{ i.text }}</i></p>
                 </div>

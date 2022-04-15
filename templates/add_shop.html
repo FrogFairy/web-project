@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="my_form" enctype="multipart/form-data">
+        <input type="hidden" name="hidden" value="update">
+        <h1>Создание магазина</h1>
+        <p>
+            <label for="title">Название</label>
+            <input type="text" class='form-control' name='title' id="title" required>
+        </p>
+        <p>
+            <label for="email">Почта</label>
+            <input type="email" class='form-control' name='email' id="email" required>
+        </p>
+        <p><input type="submit" class="btn btn-primary" value="Сохранить"></p>
+        <p class="msg">{{message}}</p>
+    </form>
+{% endblock %}

@@ -12,4 +12,6 @@ class Shops(SqlAlchemyBase, UserMixin):
     title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
+    user = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"), nullable=True)
     products = orm.relation('Products', back_populates='shops')
+    users = orm.relation('Users', back_populates='shops', lazy='subquery')

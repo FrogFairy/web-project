@@ -13,6 +13,13 @@
 .title h1, .title h1:visited, .title h1:hover, .title h1:link {
     color: black;
 }
+.confirmed {
+    color: red;
+    left: 470px;
+    top: 20px;
+    font-size: 30px;
+    position: absolute;
+}
 .user, .basket {
     width: 150px;
     background: #81d5fa;
@@ -106,12 +113,49 @@
     background: #FA8072;
     font-size: 20px;
 }
+.container-shop a, .container-shop a:visited, .container-shop a:hover, .container-shop a:link {
+    margin: 15px;
+}
+.my_form {
+    top: 120px;
+    left: 20px;
+    position: absolute;
+    width: 97%
+}
+.my_form h1 {
+    text-align: center;
+    background: white;
+    border-radius: 10px;
+    box-shadow: -1px 1px 10px;
+}
+.my_form a, .my_form a:visited, .my_form a:hover, .my_form a:link {
+    background: #ffa500;
+    color: black;
+    position: absolute;
+    left: 20px;
+    border-radius: 20px;
+    font-size: 30px;
+    text-decoration: none;
+    padding: 5px;
+    align: center;
+}
 .comment {
     top: 880px;
     background: #ffffff;
 }
 .comment-text {
+    top: 1060px;
+}
+.comment-btn, .comment-btn:visited, .comment-btn:hover, .comment-btn:link {
     top: 970px;
+    background: #ffa500;
+    color: black;
+    position: absolute;
+    left: 20px;
+    border-radius: 20px;
+    font-size: 30px;
+    text-decoration: none;
+    padding: 5px;
 }
 .comment, .comment-text {
     position: absolute;
@@ -134,9 +178,9 @@
     font-size: 30px;
     padding: 0 20px;
 }
-.comment-text .carousel-inner img {
+.comment-text img {
     height: 300px;
-    width: 300px;
+    width: 97%;
     border-radius: 20px;
     float: left;
 }
@@ -293,7 +337,34 @@
 .radio:focus + label:before {
 	box-shadow: 0 0 0 3px rgba(255,255,0,.7);
 }
-.container, .container-basket {
+.register {
+    position: absolute;
+    left: 20px;
+    top: 120px;
+    width: 97%
+}
+.msg {
+    position: absolute;
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    left: 20px;
+}
+.btn.btn-primary:hover {
+    max-height: 47px;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 8px;
+}
+.update, .update:visited, .update:hover, .update:link {
+    background: #FFA500;
+    font-size: 20px;
+}
+.container-shop form {
+    float: left;
+    margin-left: 5px;
+}
+.container, .container-basket, .container-shops, .container-shop {
     position: absolute;
     left: 20px;
     min-width: 97%;
@@ -304,6 +375,13 @@
 }
 .container-basket {
     top: 200px;
+}
+.container-shops {
+    top: 800px;
+}
+.container-shop {
+    top: 120px;
+    position: absolute;
 }
 .wrap {
     margin: 0 -15px;
@@ -318,10 +396,28 @@
     text-decoration: none;
     color: black;
 }
-.block p, .block-basket p{
+.block-shops {
+    width: 23%;
+    float: left;
+    height: 130px;
+    background: #ffffff;
+    border-radius: 20px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 10px;
+    box-shadow: 10px;
+}
+.block-shops form {
+    align: right;
+    position: relative;
+    left: 70%;
+}
+.block p, .block-basket p, .block-shops a, .block-shops a:hover{
     padding: 0 10px;
     color: black;
     font-size: 20px;
+    text-decoration: none;
 }
 .block img, .block-basket img {
     border-radius: 20px 20px 0 0;

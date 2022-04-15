@@ -10,4 +10,5 @@ class Baskets(SqlAlchemyBase, UserMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     products = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    ordered = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     users = orm.relation('Users', back_populates='baskets')
