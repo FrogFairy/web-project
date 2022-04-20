@@ -1,18 +1,12 @@
 from flask import Blueprint, render_template, abort, redirect, request, make_response, url_for
-from jinja2 import TemplateNotFound
 import os
 from . import db_session
 from .category import Category
-from forms.search import SearchForm
-from forms.comment import CommentForm
 from forms.product import ProductForm
-from .requests import Requests
 from .products import Products
 from .shops import Shops
 from .colors import Colors
-from .comments import Comments
 from .users import Users
-from .baskets import Baskets
 from data.email import generate_email
 from flask_login import current_user, login_required
 from datetime import date
@@ -38,12 +32,13 @@ def my():
             if current_user.check_password(request.form['password']):
                 user.name = request.form['name']
                 user.surname = request.form['surname']
-                user.birthday = request.form['birthday']
+                birthday = request.form['birthday'].split('-')
+                user.birthday = date(year=int(birthday[0]), month=int(birthday[1]), day=int(birthday[2]))
                 if user.email != request.form['email']:
                     if db_sess.query(Users).filter(Users.email == request.form['email']).first():
                         return render_template('my.html', title='Личный кабинет', user=current_user,
                                                message='Пользователь с такой почтой уже существует!', age=age)
-                    generate_email(request.form['name'], request.form['email'])
+                    generate_email(request.form['name'], request.form['email'], url_for('confirmed', _external=True))
                     user.email = request.form['email']
                 db_sess.commit()
                 return redirect('/my')
@@ -85,7 +80,7 @@ def shop(id):
     colors = db_sess.query(Colors)
     if request.method == 'POST':
         if request.form['hidden'].startswith('update'):
-            return redirect(f'/shop/{id}/add_product/{int(request.form["hidden"].split()[1])}')
+            return redirect(f'/add_product/{id}-{int(request.form["hidden"].split()[1])}')
         product = db_sess.query(Products).filter(Products.id == request.form['hidden']).first()
         shop.products.remove(product)
         db_sess.delete(product)
@@ -95,15 +90,24 @@ def shop(id):
                            shop=shop, category=category, colors=colors, Category=Category, Colors=Colors)
 
 
-@user_api.route('/add_product/<int:id>', methods=['GET', 'POST'])
+@user_api.route('/add_product/<int:id>-<int:id_prod>', methods=['GET', 'POST'])
+@user_api.route('/add_product/<int:id>', methods=['GET', 'POST'], defaults={'id_prod': -1})
 @login_required
-def add_product(id):
+def add_product(id, id_prod):
     form = ProductForm()
     shop = db_sess.query(Shops).filter(Shops.id == id).first()
-    if form.validate_on_submit():
-        category = db_sess.query(Category).filter(Category.name == form.category.data).first()
-        color = db_sess.query(Colors).filter(Colors.name == form.color.data).first()
+    category = db_sess.query(Category)
+    colors = db_sess.query(Colors)
+    if id_prod == -1:
+        title = 'Добавление товара'
         product = Products()
+        db_sess.commit()
+    else:
+        title = 'Редактирование товара'
+        product = db_sess.query(Products).filter(Products.id == id_prod).first()
+    if form.validate_on_submit():
+        category = category.filter(Category.name == form.category.data).first()
+        color = colors.filter(Colors.name == form.color.data).first()
         product.title = form.title.data.lower()
         product.category = category.id
         product.color = color.id
@@ -123,5 +127,7 @@ def add_product(id):
         shop.products.append(product)
         db_sess.commit()
         return redirect(f'/shop/{id}')
-    return render_template('add_product.html', title='Добавление товара',
-                           form=form, current_user=current_user)
+    return render_template('add_product.html', title=title,
+                           form=form, current_user=current_user, product=product,
+                           colors=colors, category=category,
+                           Colors=Colors, Category=Category)

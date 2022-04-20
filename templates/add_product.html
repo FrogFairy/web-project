@@ -6,7 +6,7 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.title.label }}<br>
-            {{ form.title(class='form-control') }}<br>
+            {{ form.title(class='form-control', value=product.title) }}<br>
             {% for error in form.title.errors %}
                 <p role="alert">
                     {{ error }}
@@ -15,7 +15,7 @@
         </p>
         <p>
             {{ form.category.label }}<br>
-            {{ form.category(class='form-control') }}<br>
+            {{ form.category(class='form-control', value=category.filter(Category.id == product.category)) }}<br>
             {% for error in form.category.errors %}
                 <p role="alert">
                     {{ error }}
@@ -24,7 +24,7 @@
         </p>
         <p>
             {{ form.color.label }}<br>
-            {{ form.color(class='form-control') }}<br>
+            {{ form.color(class='form-control', value=colors.filter(Colors.id == product.color)) }}<br>
             {% for error in form.color.errors %}
                 <p role="alert">
                     {{ error }}
@@ -33,7 +33,7 @@
         </p>
         <p>
             {{ form.price.label }}<br>
-            {{ form.price(class='form-control') }}<br>
+            {{ form.price(class='form-control', value=product.price) }}<br>
             {% for error in form.price.errors %}
                 <p role="alert">
                     {{ error }}
@@ -42,7 +42,7 @@
         </p>
         <p>
             {{ form.about.label }}<br>
-            {{ form.about(class='form-control') }}<br>
+            {{ form.about(class='form-control', value=product.about) }}<br>
             {% for error in form.about.errors %}
                 <p role="alert">
                     {{ error }}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="my_form" enctype="multipart/form-data">
+        <h1>Оплатить доставку</h1>
+        {% if sum %}
+            <p class='buy'>Итого: {{ sum }}р</p>
+        {% endif %}
+        <p>
+            <label for="address">Адрес доставки</label>
+            <input type="text" class='form-control' name='address' id="address" required>
+        </p>
+        <p>
+            <label for="number">Контактный телефон</label>
+            <input type="tel" class='form-control' name='number' id="number" required>
+        </p>
+        <p>
+            <label for="card">Номер карты</label>
+            <input type="text" class='form-control' name='card' id="card" required>
+        </p>
+        <p>
+            <label for="cvc">CVV/CVC</label>
+            <input type="number" class='form-control' name='cvc' id="cvc" required>
+        </p>
+        <p><input type="submit" class="btn btn-primary" value="Оплатить"></p>
+        <p class="msg">{{message}}</p>
+    </form>
+{% endblock %}

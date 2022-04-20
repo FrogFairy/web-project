@@ -22,7 +22,7 @@ blueprint = Blueprint(
 )
 db_session.global_init(f"db/penguins.db")
 db_sess = db_session.create_session()
-translate = {'clothes': 'одежда', 'shoes': 'обувь', 'house': 'дом', 'accessories': 'аксессуары'}
+translate = {'clothes': 'одежда', 'shoes': 'обувь', 'house': 'дом', 'accessories': 'аксессуары',}
 
 
 @blueprint.route('/<title>', defaults={'req': ''}, methods=['GET', 'POST'])
@@ -74,23 +74,21 @@ def page(title, req):
 
 
 @blueprint.route('/product/<int:id>', methods=["GET", "POST"])
-@login_required
 def product(id):
-    visits_count = int(request.cookies.get("visits_count", 0))
-    res = make_response()
-    res.set_cookie("visits_count", str(visits_count + 1),
-                   max_age=60 * 60 * 24 * 365 * 2)
     colors = db_sess.query(Colors)
     categories = db_sess.query(Category)
     shops = db_sess.query(Shops)
     product = db_sess.query(Products).filter(Products.id == id).first()
     comments = db_sess.query(Comments).filter(Comments.product_id == id).all()
     users = db_sess.query(Users)
-    product.count += 1
     db_sess.commit()
-    flag = current_user.id in list(map(lambda x: users.filter(Users.id == x.author).first().id, comments))
+    if current_user.is_authenticated:
+        flag = current_user.id in list(map(lambda x: users.filter(Users.id == x.author).first().id, comments))
+    else:
+        flag = True
     if request.method == "POST":
         if current_user.is_authenticated:
+            product.count += 1
             basket = db_sess.query(Baskets).filter(Baskets.id == current_user.basket_id).first()
             prod = basket.products.split(', ') if basket.products else []
             prod.append(request.form['hidden'])
@@ -112,8 +110,12 @@ def basket():
         prod.remove(str(request.form['hidden']))
         basket.products = ', '.join(prod)
         db_sess.commit()
+        return redirect('/basket')
     basket = db_sess.query(Baskets).filter(Baskets.id == current_user.basket_id).first()
-    products = db_sess.query(Products)
+    products = []
+    if basket.products:
+        for i in basket.products.split(', '):
+            products.append(db_sess.query(Products).filter(Products.id == int(i)).first())
     colors = db_sess.query(Colors)
     shops = db_sess.query(Shops)
     category = db_sess.query(Category)
@@ -141,9 +143,32 @@ def add_comment(id):
             comment.image = f'../static/img/{f.filename}'
         db_sess.add(comment)
         db_sess.commit()
-        product.rating = round((product.rating + int(form.rating.data)) / len(product.comments), 1)
+        comments = db_sess.query(Comments).filter(Comments.product_id == id).all()
+        product.rating = round((product.rating + int(form.rating.data)) / len(comments), 1)
         product.comments.append(comment)
         db_sess.commit()
         return redirect(f'/product/{id}')
     return render_template('comment.html', title='Добавление комментария',
                            form=form, current_user=current_user, product=product)
+
+
+@blueprint.route('/chemistry/<int:id>')
+@blueprint.route('/cat/<int:id>')
+def premium(id):
+    return redirect(f'/product/{id}')
+
+
+@blueprint.route('/buy', methods=['GET', 'POST'])
+@login_required
+def buy():
+    basket = db_sess.query(Baskets).filter(Baskets.id == current_user.basket_id).first()
+    if not basket.products:
+        return redirect('/basket')
+    products = db_sess.query(Products).filter(Products.id.in_(list(map(int, basket.products.split(', '))))).all()
+    summ = sum(map(lambda x: x.price, products))
+    if request.method == 'POST':
+        basket.products = ''
+        db_sess.commit()
+        return render_template('buy.html', title='Оплата', current_user=current_user,
+                               message='Покупка оплачена. Ждите доставку в ближайшие 10-20 лет')
+    return render_template('buy.html', title='Оплата', current_user=current_user, sum=summ)

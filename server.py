@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 from forms.search import SearchForm
 from forms.login import LoginForm
 from forms.register import RegisterForm
@@ -12,6 +12,7 @@ from data.users import Users
 from data.baskets import Baskets
 from data.product_api import blueprint
 from data.user_api import user_api
+from data.about_api import about_api
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from data.email import generate_email
 
@@ -20,6 +21,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.register_blueprint(blueprint)
 app.register_blueprint(user_api)
+app.register_blueprint(about_api)
 login_manager = LoginManager()
 login_manager.init_app(app)
 db_session.global_init(f"db/penguins.db")
@@ -109,7 +111,7 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        generate_email(user.name, user.email)
+        generate_email(user.name, user.email, url_for('confirmed', _external=True))
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form, current_user=current_user)
 

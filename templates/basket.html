@@ -2,6 +2,11 @@
 
 {% block content %}
     <p class="message-basket" align="center">Корзина</p>
+    {% if products %}
+        <div class="buy">
+            <a href="/buy" class="btn btn-warning">Оплатить</a>
+        </div>
+    {% endif %}
     <div class="container-basket">
         {% set count = 0 %}
         <div class="wrap">

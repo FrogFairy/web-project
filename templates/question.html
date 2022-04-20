@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="post" class="info" enctype="multipart/form-data">
+        <h1>Задать вопрос</h1>
+        <p>Прежде чем отправлять вопрос ознакомьтесь с информацией, написанной по адресу <a href="/help">Помощь</a></p>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(type='email', class='form-control') }}<br>
+            {% for error in form.email.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.text.label }}<br>
+            {{ form.text(class='form-control') }}<br>
+            {% for error in form.text.errors %}
+                <p role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p class="msg">{{message}}</p>
+    </form>
+{% endblock %}
